@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>física para o ENEM</title>
+</head>
+
+<style>
+    body {
+        font-family: Arial,sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+        color: #333;
+
+    }
+
+  header{
+    background-color: #004d99;
+    color: 20px 10px;
+    text-align: center;
+  }
+
+  main{
+    padding:20px;
+    max-width:960px;
+    margin: auto;
+    background-color: white;
+
+  }
+
+  h2{
+    color:#004d99;
+
+  }
+   section{
+    margin-bottom: 30px;
+
+   }
+   
+   .dica {
+    background-color: #e7f3fe;
+    padding: 10px;
+    border-left: 5px solid #2196f3;
+    margin-top: 10px;
+   }
+
+
+   footer {
+    background-color:  #004d99;
+    color:white;
+    text-align: center;
+    padding: 15px;
+    margin-top:30px;
+   }
+  
+</style>
+<body>
+
+    <header>
+        <h1>🧲 Física para o ENEM</h1>
+    <p>Principais conteúdos e dicas de estudo</p>
+    </header>
+
+    <main>
+        <section>
+            <h2>📘 Conteúdos Mais Cobrados</h2>
+
+         <h3>1.cinemática</h3>
+        <ul>
+                 <li>Movimento uniforme (MU)</li>
+            <li>Movimento uniformemente variado (MUV)</li>
+            <li>Gráficos de posição, velocidade e aceleração</li>
+            <li>Queda livre e lançamento vertical</li>
+        </ul>
+        <div class="dica"><strong>Dica:</strong> Domine as fórmulas básicas:<br> MU → S = S0 + vt<br>MUV → S = S0 + v0t + (a.t²)/2 ; v = v0 + at</div>
+        
+
+        <h3>2. Dinâmica</h3>
+        <ul>
+            <li>leis de Newton</li>
+            <li>Força de atrito</li>
+            <li>Força peso e normal</li>
+            <li>Plano inclinado</li>
+        </ul>
+        <div class="dica">Foco na 2ª Lei de Newton → F = m.a</div>
+
+        <h3>3. Trabalho, Energia e Potência</h3>
+         <ul>
+            <li>Trabalho de uma força</li>
+            <li>Energia cinética e potencial</li>
+            <li>Conservação da energia</li>
+            <li>Potência média</li>
+        </ul>
+        <div class="Dica">Fórmula importantes:  v = λ.f</div>
+
+
+        <h3.5 Termologia></h3>
+         <ul>
+            <li>Calor e temperatura</li>
+            <li>Dilatação térmica</li>
+            <li>Calorimetria</li>
+            <li>Mudanças de estado físico</li>
+            <li>Leis da Termodinâmica</li>
+        </ul>
+
+        <h3>6.Eletro</h3>
+         <ul>
+            <li>Corrente elétrica</li>
+            <li>Leis de Ohm</li>
+            <li>Circuitos em série e paralelo</li>
+            <li>Potência elétrica</li>
+        </ul>
+        <div class="dica">Fórmulas essenciais: V = R.i | P = V.i ou P = R.i²</div>
+
+         <h3>7. Eletromagnetismo</h3>
+        <ul>
+            <li>Ímãs e campos magnéticos</li>
+            <li>Força magnética</li>
+            <li>Indução eletromagnética (Lei de Faraday)</li>
+        </ul>
+
+
+        </section>
+        
+         <section>
+        <h2>📝 Dicas de Estudo</h2>
+        <ul>
+            <li>Faça resumos com mapas mentais</li>
+            <li>Pratique com questões antigas do ENEM</li>
+            <li>Foque na interpretação dos enunciados</li>
+            <li>Use simulados e videoaulas como revisão final</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>📚 Materiais Recomendados</h2>
+        <ul>
+            <li><strong>Plataformas:</strong> Descomplica, Stoodi, Me Salva</li>
+            <li><strong>Canais no YouTube:</strong> Física Total, Professor Jubilut, Curso Enem Gratuito</li>
+            <li><strong>Livros:</strong> Física Clássica (Ramalho), Física Fácil (Basílio)</li>
+        </ul>
+    </section>
+  
+</main>
+
+<footer>
+   <p>Feito para ajudar nos seus esstudos para o ENEM 🚀</p>
+</footer>
+
+    
+
+</body>
+</html>
