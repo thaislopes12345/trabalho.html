@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Física por Níveis</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom, #e0f2f1, #ffffff);
+      text-align: center;
+      padding: 30px;
+      max-width: 700px;
+      margin: auto;
+    }
+    h1 { color: #00695c; }
+    .mascote { font-size: 4em; margin: 10px; }
+    .nivel { font-size: 1.1em; font-weight: bold; margin-bottom: 10px; }
+    .pergunta { font-size: 1.2em; margin: 20px 0 10px; }
+    .opcao {
+      display: block;
+      background-color: #fff;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+      padding: 12px;
+      margin: 10px auto;
+      width: 80%;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .opcao:hover { background-color: #e0f7fa; }
+    .correta { background-color: #c8e6c9 !important; border-color: #2e7d32; }
+    .errada { background-color: #ffcdd2 !important; border-color: #c62828; }
+    #btnProxima {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 1em;
+      background-color: #00695c;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      display: none;
+    }
+    #resultado {
+      margin-top: 20px;
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🧠 Física por Níveis</h1>
+  <div class="mascote" id="mascote">🤖</div>
+  <div class="nivel" id="nivel">Nível 1 - Fácil</div>
+
+  <div id="quiz">
+    <div class="pergunta" id="pergunta"></div>
+    <div id="opcoes"></div>
+    <button id="btnProxima" onclick="proximaPergunta()">👉 Próxima</button>
+  </div>
+
+  <div id="resultado"></div>
+
+  <script>
+    const fases = [
+      {
+        nivel: "Nível 1 - Fácil",
+        perguntas: [
+          {
+            pergunta: "🌍 Unidade de medida da força?",
+            opcoes: ["A) Joule", "B) Watt", "C) Newton", "D) Pascal"],
+            resposta: "C"
+          },
+          {
+            pergunta: "🔋 Partícula com carga negativa?",
+            opcoes: ["A) Próton", "B) Nêutron", "C) Elétron", "D) Fóton"],
+            resposta: "C"
+          },
+          {
+            pergunta: "📐 O que é velocidade?",
+            opcoes: ["A) d/t", "B) m·a", "C) F/A", "D) m·c²"],
+            resposta: "A"
+          }
+        ]
+      },
+      {
+        nivel: "Nível 2 - Médio",
+        perguntas: [
+          {
+            pergunta: "⚡ O que acontece com energia num sistema isolado?",
+            opcoes: ["A) Se perde", "B) Se conserva", "C) Aumenta", "D) Diminui"],
+            resposta: "B"
+          },
+          {
+            pergunta: "🔥 Fórmula da potência?",
+            opcoes: ["A) F·d", "B) V/t", "C) P = F·v", "D) P = E/t"],
+            resposta: "D"
+          },
+          {
+            pergunta: "📦 3ª Lei de Newton?",
+            opcoes: ["A) Ação = Reação", "B) F = m·a", "C) E = m·c²", "D) V = d/t"],
+            resposta: "A"
+          }
+        ]
+      },
+      {
+        nivel: "Nível 3 - Difícil",
+        perguntas: [
+          {
+            pergunta: "🌌 O que é energia cinética?",
+            opcoes: ["A) Energia da posição", "B) Energia do movimento", "C) Energia térmica", "D) Energia solar"],
+            resposta: "B"
+          },
+          {
+            pergunta: "🌡️ Lei de conservação da energia diz que:",
+            opcoes: ["A) Energia pode ser criada", "B) Energia desaparece", "C) Energia é constante", "D) Energia vira matéria"],
+            resposta: "C"
+          },
+          {
+            pergunta: "🧲 Unidade de campo magnético?",
+            opcoes: ["A) Newton", "B) Tesla", "C) Joule", "D) Coulomb"],
+            resposta: "B"
+          }
+        ]
+      }
+    ];
+
+    let faseAtual = 0;
+    let perguntaAtual = 0;
+    let pontos = 0;
+    let acertosFase = 0;
+    let bloqueado = false;
+
+    const mascote = document.getElementById("mascote");
+
+    function carregarPergunta() {
+      const fase = fases[faseAtual];
+      const q = fase.perguntas[perguntaAtual];
+      document.getElementById("nivel").innerText = fase.nivel;
+      document.getElementById("pergunta").innerText = q.pergunta;
+      const opcoesDiv = document.getElementById("opcoes");
+      opcoesDiv.innerHTML = "";
+      bloqueado = false;
+      mascote.innerText = "🤖";
+
+      q.opcoes.forEach(op => {
+        const btn = document.createElement("div");
+        btn.className = "opcao";
+        btn.innerText = op;
+        btn.onclick = () => verificarResposta(btn, op[0]);
+        opcoesDiv.appendChild(btn);
+      });
+
+      document.getElementById("btnProxima").style.display = "none";
+    }
+
+    function verificarResposta(elemento, letra) {
+      if (bloqueado) return;
+      bloqueado = true;
+
+      const fase = fases[faseAtual];
+      const correta = fase.perguntas[perguntaAtual].resposta;
+      const opcoes = document.querySelectorAll(".opcao");
+
+      opcoes.forEach(op => {
+        const letraOp = op.innerText[0];
+        if (letraOp === correta) op.classList.add("correta");
+        if (letraOp === letra && letraOp !== correta) op.classList.add("errada");
+        op.style.pointerEvents = "none";
+      });
+
+      if (letra === correta) {
+        pontos++;
+        acertosFase++;
+        mascote.innerText = "😎 Mandou bem!";
+      } else {
+        mascote.innerText = "😵 Opa!";
+      }
+
+      document.getElementById("btnProxima").style.display = "inline-block";
+    }
+
+    function proximaPergunta() {
+      perguntaAtual++;
+      const fase = fases[faseAtual];
+
+      if (perguntaAtual < fase.perguntas.length) {
+        carregarPergunta();
+      } else {
+        if (acertosFase >= 2) {
+          faseAtual++;
+          if (faseAtual < fases.length) {
+            perguntaAtual = 0;
+            acertosFase = 0;
+            mascote.innerText = "🚀 Subindo de nível!";
+            setTimeout(carregarPergunta, 1000);
+          } else {
+            mostrarResultadoFinal();
+          }
+        } else {
+          mostrarFimDeJogo();
+        }
+      }
+    }
+
+    function mostrarFimDeJogo() {
+      document.getElementById("quiz").style.display = "none";
+      document.getElementById("resultado").innerHTML = `😢 Você não passou de nível.<br>Acertou ${pontos} perguntas no total.`;
+      mascote.innerText = "💀";
+    }
+
+    function mostrarResultadoFinal() {
+      document.getElementById("quiz").style.display = "none";
+      document.getElementById("resultado").innerHTML = `🎉 Parabéns! Você completou todos os níveis!<br>Total de acertos: <strong>${pontos}</strong>`;
+      mascote.innerText = "🏆";
+    }
+
+
+    carregarPergunta();
+  </script>
+
+</body>
+</html>
