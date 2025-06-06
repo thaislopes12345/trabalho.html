@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Ímã Insano</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      let ball, magnet, portal, polarity = 1;
+      let walls = [];
+      let timeLeft = 30;
+      let startTime;
+      let gameWon = false;
+
+      function setup() {
+        createCanvas(windowWidth, windowHeight);
+        ball = createVector(100, height / 2);
+        ball.vel = createVector(0, 0);
+        magnet = createVector(mouseX, mouseY);
+        portal = createVector(width - 100, random(100, height - 100));
+
+        
+        for (let i = 0; i < 6; i++) {
+          walls.push({
+            x: random(width * 0.3, width * 0.8),
+            y: random(50, height - 50),
+            w: random(80, 150),
+            h: 20
+          });
+        }
+
+        startTime = millis();
+      }
+
+      function draw() {
+        background(20);
+
+        
+        let elapsed = (millis() - startTime) / 1000;
+        timeLeft = max(0, 30 - elapsed);
+
+        if (timeLeft === 0 && !gameWon) {
+          gameOver();
+          return;
+        }
+
+    
+        fill(0, 200, 255);
+        ellipse(portal.x, portal.y, 40);
+
+        
+        magnet.set(mouseX, mouseY);
+        fill(polarity === 1 ? 'red' : 'blue');
+        ellipse(magnet.x, magnet.y, 30);
+
+        
+        let force = p5.Vector.sub(magnet, ball);
+        let distSq = constrain(force.magSq(), 100, 10000);
+        force.setMag(polarity * 1000 / distSq);
+        ball.vel.add(force);
+        ball.vel.limit(7);
+        ball.add(ball.vel);
+
+        
+        if (ball.x < 0 || ball.x > width) ball.vel.x *= -1;
+        if (ball.y < 0 || ball.y > height) ball.vel.y *= -1;
+
+        
+        fill(255);
+        for (let w of walls) {
+          rect(w.x, w.y, w.w, w.h);
+          
+          if (
+            ball.x > w.x && ball.x < w.x + w.w &&
+            ball.y > w.y && ball.y < w.y + w.h
+          ) {
+            ball.vel.mult(-0.8);
+          }
+        }
+
+        
+        fill(255, 255, 100);
+        ellipse(ball.x, ball.y, 20);
+
+        
+        if (ball.dist(portal) < 25 && !gameWon) {
+          winGame();
+        }
+
+        
+        fill(255);
+        textSize(18);
+        text(`Tempo restante: ${timeLeft.toFixed(1)}s`, 20, 30);
+        text("Clique para inverter o ímã (Atração/Rejeição)", 20, 60);
+      }
+
+      function mousePressed() {
+        if (!gameWon) polarity *= -1;
+      }
+
+      function winGame() {
+        gameWon = true;
+        fill(0, 255, 0);
+        textSize(40);
+        textAlign(CENTER, CENTER);
+        text("🎉 Você venceu!", width / 2, height / 2);
+        noLoop();
+      }
+
+      function gameOver() {
+        fill(255, 0, 0);
+        textSize(40);
+        textAlign(CENTER, CENTER);
+        text("💀 Tempo esgotado!", width / 2, height / 2);
+        noLoop();
+      }
+
+      function windowResized() {
+        resizeCanvas(windowWidth, windowHeight);
+      }
+    </script>
+  </body>
+</html>
